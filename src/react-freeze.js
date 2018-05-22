@@ -18,12 +18,9 @@ function deepFreeze (o) {
 
 
 function inspectState(thizState) {
-    console.log("####");
     const keys = Object.keys(thizState);
     for (var i = 0; i < keys.length; i++) {
-      console.log("K- " + keys[i]);
       const stateElem = thizState[keys[i]];
-      console.log(typeof stateElem);
       if (stateElem !== null && typeof stateElem === 'object') {
         console.log("freezing " + keys[i]);
         deepFreeze(stateElem);
@@ -37,7 +34,6 @@ export function freezeComponent(thiz) {
     var origSetState = thiz.setState;
     origSetState = origSetState.bind(thiz);
     thiz.setState = function (obj) {
-        console.log("my set state!");
         inspectState(obj);
         origSetState(obj);
     };
